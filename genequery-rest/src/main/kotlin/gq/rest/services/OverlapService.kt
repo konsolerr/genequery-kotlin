@@ -1,6 +1,6 @@
 package gq.rest.services
 
-import gq.core.data.GQModule
+import gq.core.data.GQDataset
 import gq.core.data.Species
 import gq.rest.GQDataRepository
 import gq.rest.exceptions.BadRequestException
@@ -12,12 +12,12 @@ data class OverlapResponse(val overlapSymbolGenes: List<String>, val otherModule
 @Service
 open class OverlapService @Autowired constructor(private val gqDataRepository: GQDataRepository) {
 
-    open fun getModule(moduleName: String): GQModule {
-        val module = gqDataRepository.moduleCollection.fullNameToGQModule[GQModule.parseFullModuleName(moduleName)]
+    open fun getModule(datasetId: String): GQDataset {
+        val module = gqDataRepository.moduleCollection.fullNameToGQDataset[datasetId]
         if (module != null) {
             return module
         } else {
-            throw BadRequestException("Module $moduleName not found.")
+            throw BadRequestException("Module $datasetId not found.")
         }
     }
 

@@ -4,7 +4,7 @@ import org.junit.Test
 
 import org.junit.Assert.*
 
-class GQModuleKtTest {
+class GQDatasetKtTest {
     fun testWithStd(arr1: LongArray, arr2: LongArray) {
         val stdIntersection = arr1.intersect(arr2.toList()).toLongArray()
         assertArrayEquals(stdIntersection, arr1 intersectWithSorted arr2)
@@ -44,33 +44,11 @@ class GQModuleKtTest {
     }
 
     @Test
-    fun testParseFullModuleName() {
-        val stringName = "GSE123_GPL123#12"
-        val (datasetId, clusterId) = GQModule.parseFullModuleName(stringName)
-        assertEquals("GSE123_GPL123", datasetId)
-        assertEquals("12", clusterId)
-    }
-
-    @Test
     fun testBuildByFullName() {
-        val stringName = "GSE123_GPL123#12"
-        val module = GQModule.buildByFullName(stringName, Species.HUMAN, longArrayOf(1, 2, 3, 4))
-        assertEquals("GSE123_GPL123", module.seriesName())
-        assertEquals(Pair("GSE123_GPL123", "12"), module.fullName())
-        assertEquals(stringName, module.joinFullName())
-    }
-
-    @Test(expected=IllegalArgumentException::class)
-    fun testParseFullModuleNameBadNotEnoughParts1() {
-        GQModule.parseFullModuleName("GSE123_GPL124")
-    }
-
-
-    @Test
-    fun testParseFullModuleNameBadNumber() {
-        val stringName = "GSE123_GPL124#asdf"
-        val (datasetId, clusterId) = GQModule.parseFullModuleName(stringName)
-        assertEquals("GSE123_GPL124", datasetId)
-        assertEquals("asdf", clusterId)
+        val datasetId = "GSE123_GPL123#12"
+        val universeId = "UNIVERSE"
+        val module = GQDataset.buildByFullName(datasetId, universeId, Species.HUMAN, longArrayOf(1, 2, 3, 4))
+        assertEquals("GSE123_GPL123#12", module.fullName())
+        assertEquals(datasetId, module.joinFullName())
     }
 }

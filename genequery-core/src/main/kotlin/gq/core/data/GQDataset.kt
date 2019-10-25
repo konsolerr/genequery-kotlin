@@ -44,9 +44,9 @@ fun LongArray.sizeOfIntersectionWithSorted(other: LongArray): Int {
 fun LongArray.sizeOfIntersectionWithSorted(other: List<Long>) = sizeOfIntersectionWithSorted(other.toLongArray())
 
 
-open class GQModule(
+open class GQDataset(
         val datasetId: String,
-        val clusterId: String,
+        val universeId: String,
         val species: Species,
         entrezIds: LongArray) {
     init {
@@ -55,27 +55,18 @@ open class GQModule(
 
     val sortedEntrezIds = entrezIds.sorted().toLongArray()
     val size = sortedEntrezIds.size
+    val isUniverse = datasetId == universeId
 
     companion object {
-        fun parseFullModuleName(fullName: String): Pair<String, String> {
-            val parts = fullName.split('#')
-            require(parts.size == 2) {"full module name $fullName has bad format"}
-            return Pair(parts.component1(), parts.component2())
+        fun buildByFullName(datasetId: String, universeId: String, species: Species, entrezIds: LongArray): GQDataset {
+            return GQDataset(datasetId, universeId, species, entrezIds)
         }
 
-        fun buildByFullName(fullName: String, species: Species, entrezIds: LongArray): GQModule {
-            val (datasetId, clusterId) = parseFullModuleName(fullName)
-            return GQModule(datasetId, clusterId, species, entrezIds)
-        }
-
-        fun joinFullName(datasetId: String, clusterId: String) = "$datasetId#$clusterId"
+        fun joinFullName(datasetId: String) = "$datasetId"
     }
 
-    fun joinFullName() = joinFullName(datasetId, clusterId)
+    fun joinFullName() = joinFullName(datasetId)
+    fun fullName() = datasetId
 
-    fun fullName() = Pair(datasetId, clusterId)
-
-    fun seriesName() = datasetId
-
-    override fun toString() = "${joinFullName()}$species,$size genes)"
+    override fun toString() = "${joinFullName()}, $species, $size genes)"
 }

@@ -46,4 +46,10 @@ class GQDataRepository @Autowired constructor(private val gqRestProperties: GQRe
         LOG.info("Initialize module collection from ${availableGmtFiles.joinToString(",")}")
         readModulesFromFiles(availableGmtFiles)
     }
+
+    val moduleInfoCollection = GQModuleInfoCollection {
+        LOG.info("Loading JSON annotation from ${gqRestProperties.pathModuleInfo()}")
+        readModuleInfoFromFile(gqRestProperties.pathModuleInfo())
+    }
+
 }

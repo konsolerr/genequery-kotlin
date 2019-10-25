@@ -63,7 +63,7 @@ open class GeneSetEnrichmentControllerTest {
                 .andExpect(jsonPath("$.result.identifiedGeneFormat", equalTo("entrez")))
                 .andExpect(jsonPath("$.result.geneConversionMap.494143", equalTo(494143)))
                 .andExpect(jsonPath("$.result.enrichmentResultItems", hasSize<Int>(3)))
-                .andExpect(jsonPath("$.result.enrichmentResultItems[0].datasetId", equalTo("GSE10021_GPL570")))
+                .andExpect(jsonPath("$.result.enrichmentResultItems[0].datasetId", equalTo("GSE10021_GPL570#30")))
                 .andExpect(jsonPath("$.result.enrichmentResultItems[0].logAdjPvalue", bigDecimalCloseTo(-131.88698551435778, 1e-5)))
                 .andExpect(jsonPath("$.result.enrichmentResultItems[0].intersectionSize", equalTo(55)))
     }
@@ -84,7 +84,6 @@ open class GeneSetEnrichmentControllerTest {
                 .andExpect(jsonPath("$.result.geneConversionMap.ADSL", equalTo(11564)))
                 .andExpect(jsonPath("$.result.geneConversionMap.aasdf", nullValue()))
                 .andExpect(jsonPath("$.result.enrichmentResultItems", hasSize<Int>(1)))
-                .andExpect(jsonPath("$.result.enrichmentResultItems[0].clusterId", equalTo("6")))
     }
 
     @Test
