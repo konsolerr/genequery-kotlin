@@ -19,12 +19,12 @@ class FisherExact private constructor(universeSize: Int = 7000) {
     }
 
     fun rightTailPvalue(a: Int, b: Int, c: Int, d: Int): Double {
-        require(a >= 0 && b >= 0 && c >= 0 && d >= 0, {
+        require(a >= 0 && b >= 0 && c >= 0 && d >= 0) {
             "Every argument must be non-negative: a=$a, b=$b, c=$c, d=$d"
-        })
-        require(a + b + c + d < logFactorials.size, {
+        }
+        require(a + b + c + d < logFactorials.size) {
             "Sum of the arguments must be not greater than universe: $a + $b + $c + $d > ${logFactorials.size - 1}"
-        })
+        }
         // TODO how to bypass reassign?
         var aa = a
         var bb = b

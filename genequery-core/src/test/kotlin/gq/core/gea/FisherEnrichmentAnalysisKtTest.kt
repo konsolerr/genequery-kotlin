@@ -29,9 +29,9 @@ class FisherEnrichmentAnalysisKtTest {
         val query = SpecifiedEntrezGenes(Species.MOUSE, readEntrezIds("hypoxia.txt"))
         val result = findBonferroniSignificant(dataset, query)
         assertEquals(4, result.size)
-        assertEquals(listOf("GSE3296_GPL1261", "GSE3318_GPL1261", "GSE3196_GPL1261", "GSE44762_GPL6885"), result.map { it.datasetId })
+
+        assertEquals(listOf("GSE3296_GPL1261#10", "GSE3318_GPL1261#7", "GSE3196_GPL1261#7", "GSE44762_GPL6885#14"), result.map { it.datasetId })
         assertEquals(listOf(46, 46, 48, 14), result.map { it.intersectionSize })
-        assertEquals(listOf("10", "7", "7", "14"), result.map { it.clusterId })
         assertDoubleEquals(-41.077, result.first().logPvalue, 1e-3)
         assertDoubleEquals(-7.0, result.last().logPvalue, 1e-3)
     }
@@ -74,7 +74,6 @@ class FisherEnrichmentAnalysisKtTest {
         assertEquals(result.size, resultWithNoise.size)
         assertEquals(result.map { it.datasetId }, resultWithNoise.map { it.datasetId })
         assertEquals(result.map { it.intersectionSize }, resultWithNoise.map { it.intersectionSize })
-        assertEquals(result.map { it.clusterId }, resultWithNoise.map { it.clusterId })
         assertDoubleEquals(result.first().logPvalue, resultWithNoise.first().logPvalue, 1e-3)
         assertDoubleEquals(result.last().logPvalue, resultWithNoise.last().logPvalue, 1e-3)
     }

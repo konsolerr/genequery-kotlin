@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation("org.json:json:20190722")
     testCompile(group="org.jetbrains.kotlin", name="kotlin-test", version="1.1.51")
     testCompile("junit:junit:4.12")
 }

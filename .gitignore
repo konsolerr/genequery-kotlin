@@ -10,3 +10,4 @@ genequery-core/build/
 .idea/dictionaries/*
 .idea/libraries/*
 /.idea/
+/tests/
