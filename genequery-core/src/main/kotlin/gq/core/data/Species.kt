@@ -3,7 +3,7 @@ package gq.core.data
 enum class Species(val original: String) {
     HUMAN("hs"),
     MOUSE("mm"),
-    RAT("rt");
+    RAT("rn");
 
     companion object {
         fun fromOriginal(original: String): Species {
