@@ -3,13 +3,13 @@ package gq.core.math
 /**
  * TODO
  */
-class FisherExact private constructor(universeSize: Int = 7000) {
+class FisherExact private constructor(maxUniverseSize: Int = 100000) {
     companion object {
         val EPS = 1e-323
         val instance = FisherExact()
     }
 
-    private val logFactorials = DoubleArray(universeSize + 1)
+    private val logFactorials = DoubleArray(maxUniverseSize + 1)
 
     init {
         logFactorials[0] = 0.0

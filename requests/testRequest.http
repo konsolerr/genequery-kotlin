@@ -1,0 +1,35 @@
+POST http://127.0.0.1:7777/perform-enrichment
+Content-Type: application/x-www-form-urlencoded
+
+genes=[]&speciesFrom=mm&speciesFrom=mm
+
+###
+POST http://127.0.0.1:7777/perform-enrichment
+Content-Type: application/json
+
+{
+  "genes": [
+    "Gzmb",
+    "Ptprc",
+    "Cd3d",
+    "Cd3e",
+    "Ccl5",
+    "Trac",
+    "Nkg7"
+  ],
+  "speciesFrom": "mm",
+  "speciesTo": "mm"
+}
+
+###
+
+POST http://127.0.0.1:7777/perform-enrichment
+Content-Type: application/json
+
+{
+  "genes": [],
+  "speciesFrom": "mm",
+  "speciesTo": "mm"
+}
+
+###
