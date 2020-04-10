@@ -18,3 +18,17 @@ fun convertGenesToEntrez(rawGenes: List<String>,
         throw BadRequestException(ex)
     }
 }
+
+fun convertGenesToSymbol(rawGenes: List<String>,
+                         speciesFrom: Species,
+                         speciesTo: Species = speciesFrom,
+                         gqDataRepository: GQDataRepository): Pair<GeneFormat, Map<String, String?>> {
+    try {
+        val currentGeneFormat = GeneFormat.guess(rawGenes)
+        return Pair(
+                currentGeneFormat,
+                gqDataRepository.smartConverter.toSymbol(rawGenes, currentGeneFormat, speciesFrom, speciesTo))
+    } catch (ex: IllegalArgumentException) {
+        throw BadRequestException(ex)
+    }
+}

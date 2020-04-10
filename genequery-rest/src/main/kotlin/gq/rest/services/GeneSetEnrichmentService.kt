@@ -1,7 +1,9 @@
 package gq.rest.services
 
 import gq.core.data.Species
-import gq.core.gea.*
+import gq.core.gea.EnrichmentResultItem
+import gq.core.gea.SpecifiedEntrezGenes
+import gq.core.gea.findBonferroniSignificant
 import gq.rest.GQDataRepository
 import gq.rest.config.GQRestProperties
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service
 
 data class EnrichmentResponse(val identifiedGeneFormat: String,
                               val geneConversionMap: Map<String, Long?>,
+                              val geneConversionMapSymbol: Map<String, String?>,
                               val enrichmentResultItems: List<EnrichmentResultItem>,
                               val meta: Map<String, Map<String, String>>)
 
@@ -22,6 +25,7 @@ open class GeneSetEnrichmentService @Autowired constructor(
                                  speciesFrom: Species,
                                  speciesTo: Species = speciesFrom): EnrichmentResponse {
         val (identifiedGeneFormat, conversionMap) = convertGenesToEntrez(rawGenes, speciesFrom, speciesTo, gqDataRepository)
+        val (_, conversionMapSymbol) = convertGenesToSymbol(rawGenes, speciesFrom, speciesTo, gqDataRepository)
 
         val entrezIds = conversionMap.values.filterNotNull()
         val enrichmentItems = findBonferroniSignificant(
@@ -39,6 +43,6 @@ open class GeneSetEnrichmentService @Autowired constructor(
             keys.associateWith { itt -> obj.getString(itt) }
         }
 
-        return EnrichmentResponse(identifiedGeneFormat.formatName, conversionMap, enrichmentItems, modulesToInfo)
+        return EnrichmentResponse(identifiedGeneFormat.formatName, conversionMap, conversionMapSymbol, enrichmentItems, modulesToInfo)
     }
 }
