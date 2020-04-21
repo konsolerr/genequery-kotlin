@@ -48,7 +48,7 @@ fun findBonferroniSignificant(
 
 
                 val moduleIntersectionSize = it.sortedEntrezIds.sizeOfIntersectionWithSorted(queryEntrezIds)
-                if (moduleIntersectionSize == 0) return null
+//                if (moduleIntersectionSize == 0) return null
 
                 val moduleAndNotQuery = it.size - moduleIntersectionSize
                 val queryAndNotModule = queryUniverseOverlap - moduleIntersectionSize
