@@ -34,7 +34,7 @@ fun findBonferroniSignificant(
         moduleCollection: GQModuleCollection,
         query: SpecifiedEntrezGenes,
         bonferroniMaxPvalue: Double = 0.01): List<EnrichmentResultItem> {
-    val dataSetsForThisSpecies = moduleCollection.speciesToDataSets[query.species] ?: return emptyList()
+    val dataSetsForThisSpecies = moduleCollection.speciesToDataSets.getValue(query.species).filter { !it.isUniverse }
     val queryEntrezIds = if (query.entrezIds.isNotEmpty()) query.entrezIds.toSortedSet().toLongArray() else return emptyList()
     val moduleCount = moduleCollection.speciesToDataSets.getValue(query.species).filter { !it.isUniverse }.size
 
