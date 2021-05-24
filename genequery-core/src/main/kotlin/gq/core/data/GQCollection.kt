@@ -1,19 +1,31 @@
 package gq.core.data
 
 import java.io.File
+import de.jupf.staticlog.Log
 
 fun populateModulesFromGmt(path: String, species: Species, dest: MutableList<GQDataset>) {
     File(path).forEachLine {
         if (it.isNotEmpty()) {
             try {
-                val (datasetId, universeId, commaSepEntrezIds) = it.split("\t")
-                dest.add(GQDataset.buildByFullName(
-                        datasetId,
-                        universeId,
-                        species,
-                        commaSepEntrezIds.split(',').map { it.toLong() }.toLongArray()))
+                val gmtParts = it.split("\t")
+                when (gmtParts.size) {
+                    2 -> {
+                        Log.warn("Failed to parse GMT line: $it. Empty module")
+                    }
+                    3 -> {
+                        val (datasetId, universeId, commaSepEntrezIds) = it.split("\t")
+                        dest.add(GQDataset.buildByFullName(
+                                datasetId,
+                                universeId,
+                                species,
+                                commaSepEntrezIds.split(',').map { it.toLong() }.toLongArray()))
+                    }
+                    else -> {
+                        Log.error("Failed to parse GMT line: $it")
+                    }
+                }
             } catch(e: Exception) {
-                throw RuntimeException("Fail to parse GMT line: $it", e)
+                Log.error("Failed to parse GMT line: $it. With exception $e")
             }
         }
     }
